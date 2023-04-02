@@ -1,0 +1,11 @@
+<title>Posts</title>
+<h1>Shared Theories</h1>
+{% for post in posts %}
+    <ul>
+    <p> --------------------------------------------------</p>
+        <p>Title: {{ post[0] }}
+        <p>text: {{ post[1] }}
+                                <p>Created at: {{ post[2] }}</p>
+    <p> --------------------------------------------------</p>
+    </ul>
+{% endfor %}
