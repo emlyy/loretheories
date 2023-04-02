@@ -1,5 +1,8 @@
 <title>Posts</title>
 <h1>Shared Theories</h1>
+{% if message %}
+<p> There are no theories on the site yet.</p>
+{% else %}
 {% for post in posts %}
     <ul>
     <p> --------------------------------------------------</p>
@@ -9,3 +12,9 @@
     <p> --------------------------------------------------</p>
     </ul>
 {% endfor %}
+{% if session.user_id %}
+<p>You are logged in as {{ session.username }}</p>
+<p><a href="logout">Log out<a></p>
+<a href="create">Click here to create a new theoy.<a>
+{% else %}
+<p><a href="login">Log in<a></p>

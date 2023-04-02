@@ -13,16 +13,12 @@ def login():
     password = request.form["password"]
     if not users.login(username, password):
         return render_template("index.html", message="Incorrect username or password :/ Please try again.")
-    return redirect("/login_success")
+    return redirect("/")
 
 @app.route("/logout")
 def logout():
     users.logout()
     return redirect("/")
-
-@app.route("/login_success")
-def login_success():
-    return render_template("logged.html")
 
 @app.route("/register", methods=["GET", "POST"])
 def register():
@@ -55,6 +51,4 @@ def create():
 @app.route("/all_posts", methods=["GET"])
 def all_posts():
     posts_list = posts.get_all_posts()
-    if len(posts_list) != 0:
-        return render_template("posts.html", posts=posts_list)
-    return redirect("/logged")
+    return render_template("posts.html", posts=posts_list)
