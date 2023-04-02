@@ -16,6 +16,7 @@ Tulevia ominaisuuksia:
 - käyttäjä voi etsiä teorioita, joiden osana on annettu sana
 - käyttäjä voi poistaa kirjoittamansa kommentin tai teorian
 - ylläpitäjä voi lisätä ja poistaa teorioita ja kommentteja
+- tulevat taulut: comments, likes, tags
 
 
 ## Ohjeet käynnistämiseen paikallisesti
