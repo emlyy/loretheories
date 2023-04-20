@@ -7,9 +7,10 @@
     <p> There are no theories on the site yet.</p>
 {% else %}
 {% for post in posts %}
-    <p style="border: 1px solid black">Title: {{ post[0] }}
-    <br>text: {{ post[1] }}
-    <br>&nbsp&nbsp&nbsp&nbsp&nbspCreated at: {{ post[2] }}</p>
+    <p style="border: 1px solid black">Title: {{ post[1] }}
+    <br>text: {{ post[2] }}
+    <br>&nbsp&nbsp&nbsp&nbsp&nbspCreated at: {{ post[3] }}
+    <a href="/comments/{{ post[0] }}">comments</a>
 {% endfor %}
 {% endif %}
 {% if session.user_id %}
