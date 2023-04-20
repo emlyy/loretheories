@@ -1,7 +1,7 @@
 from flask import Flask
 from flask import render_template, redirect, request, session
 from app import app
-import users, posts
+import users, posts, comments
 
 @app.route("/")
 def index():
@@ -64,17 +64,25 @@ def categories():
 def search():
     if request.method == "GET":
         return render_template("search.html")
-    if requset.method == "POST":
+    if request.method == "POST":
         posts_list = posts.search_posts(search_word)
         return render_template("posts.html", posts=posts_list)
 
-@app.route("/comments/<int:id>", methods=["GET", "POST"])
-def comments(id):
+@app.route("/comments/<int:id>", methods=["GET"])
+def commentss(id):
+    comments.save_session(id)
+    return redirect("/comment")
+
+@app.route("/comment", methods=["GET", "POST"])
+def comment():
     if request.method == "GET":
-        comments_list = comments.get_comments(id)
-        return render_template("comments.html")
+        comments_list = comments.get_comments()
+        if len(comments_list) != 0:
+            return render_template("comments.html", comments=comments_list)
+        else:
+            return render_template("comments.html", message="There are no commnets, be the first to commnent.")
     if request.method == "POST":
-        comment = request.form["comment"]
-        if not comments.add_comment(comment, id):
-            return render_template("comment.html", message="could not post comment")
-        return redirect("/comments")
+        comment = request.form["message"]
+        if not comments.post_comment(comment):
+            return render_template("comments.html", message="could not post comment")
+    return redirect("/comment")

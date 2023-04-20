@@ -3,7 +3,7 @@ from sqlalchemy.sql import text
 from db import db
 
 def get_all_posts():
-    sql = text("SELECT title, message, posted_at FROM posts")
+    sql = text("SELECT id, title, message, posted_at FROM posts")
     result = db.session.execute(sql)
     posts = result.fetchall()
     return posts
