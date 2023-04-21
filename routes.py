@@ -1,7 +1,7 @@
 from flask import Flask
 from flask import render_template, redirect, request, session
 from app import app
-import users, posts, comments
+import users, posts, comments, likes
 
 @app.route("/")
 def index():
@@ -20,7 +20,8 @@ def login():
 
 @app.route("/logout")
 def logout():
-    users.logout()
+    if users.logged_in:
+        users.logout()
     return redirect("/")
 
 @app.route("/register", methods=["GET", "POST"])
@@ -31,13 +32,21 @@ def register():
         username = request.form["username"]
         password_1 = request.form["password_1"]
         password_2 = request.form["password_2"]
+        error_message = None
+        if len(username) < 1:
+            error_message = "username cannot be empty"
+        if not user.check_username(username):
+            error_message = "username already taken"
+        if len(password_1) < 6:
+            error_message = "password must be atleast 6 characters long"
         if password_1 != password_2:
-            return render_template("register.html", message="passwords do not match")
-        if users.register(username, password_1):
-            return redirect("/")
-        else:
-            return render_template("register.html", message="there was a problem try again")
-
+            error_message = "passwords do not match"
+        if error_message == None:
+            if users.register(username, password_1):
+                return redirect("/")
+            else:
+                error_message = "there was a problem try again"
+        return render_template("register.html", message=error_message)
 
 @app.route("/create", methods=["GET", "POST"])
 def create():
@@ -53,6 +62,7 @@ def create():
 
 @app.route("/all_posts", methods=["GET"])
 def all_posts():
+    likes.check_if_liked
     posts_list = posts.get_all_posts()
     return render_template("posts.html", posts=posts_list)
 
@@ -86,3 +96,16 @@ def comment():
         if not comments.post_comment(comment):
             return render_template("comments.html", message="could not post comment")
     return redirect("/comment")
+
+@app.route("/like/<int:id>", methods=["POST"])
+def likess(id):
+    if users.logged_in():
+        comments.save_session(id)
+        return redirect("/like")
+    return redirect("/all_posts")
+
+@app.route("/like")
+def like():
+    if users.logged_in():
+        likes.like_post()
+    return redirect("all_posts")

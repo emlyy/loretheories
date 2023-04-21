@@ -1,7 +1,9 @@
 {% extends "layout.html" %}
 {% block title %}{% endblock %}
 {% block content %}
-<h2>Comment;{{ comments[0][3] }}</h2>
+{% if comments %}
+<h2>Comment; {{ comments[0][3] }}</h2>
+{% endif %}
 {% if message %}
     <p style="color:red">{{ message }}</p>
 {% endif %}
@@ -10,13 +12,14 @@
     <br> {{ comment[1] }}
     <br> &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp at: {{ comment[2] }}</p>
 {% endfor %}
+{% if session.user_id %}
 <p>Write a new commnet:</p>
 <form action="comment" method="POST">
 <textarea name="message" rows="10" cols="60">
 </textarea> <br>
 <input type="submit" value="send">
 </form>
-{% if session.user_id %}
-    <p>You are logged in as {{ session.username }}</p>
+<br>
+<p>You are logged in as {{ session.username }}</p>
 {% endif %}
 {% endblock %}
