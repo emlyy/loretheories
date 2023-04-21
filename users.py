@@ -3,6 +3,11 @@ from werkzeug.security import check_password_hash, generate_password_hash
 from sqlalchemy.sql import text
 from db import db
 
+def logged_in():
+    if session.get("username"):
+        return True
+    return False
+
 def register(username, password):
     hash_value = generate_password_hash(password)
     try:
@@ -13,11 +18,21 @@ def register(username, password):
         return False
     return True
 
+def check_username(username):
+    sql = text("SELECT username FROM users WHERE username=:username")
+    result = db.session.execute(sql, {"username":username})
+    user = result.fetchone()
+    if user == None:
+        return True
+    return False
+
 def login(username, password):
     sql = text("SELECT id, password FROM users WHERE username=:username")
     result = db.session.execute(sql, {"username":username})
     user = result.fetchone()
     if user == None:
+        return False
+    if logged_in():
         return False
     if check_password_hash(user[1], password):
         session["username"] = username
