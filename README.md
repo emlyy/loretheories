@@ -5,18 +5,14 @@ Lore Theories on sovellus, jossa voi jakaa teorioita kaikista mediatyypeistä, k
 
 Sovelluksen tilanne:
 - sovellus on testattavissa paikallisesti
-- tauluja on tällä hetkellä käytössä vain kaksi
 - käyttäjä voi luoda uuden tunnuksen, kirjautua sisään ja ulos
 - voi lukea julkaistuja teorioita ja kirjautuneena pystyy luomaan uuden teorian
+- käyttäjä voi kommentoida ja tykätä muiden julkaisuja
 
 Tulevia ominaisuuksia:
 - käyttäjä voi lisätä categoria- ja muut tägit
-- käyttäjä voi kommentoida ja antaa tähden muiden teorioille
-- käyttäjä näkee etusivulla kaikkien teorioiden top 5 -listan (tähtien määrä) ja listan eri kategorioista
 - käyttäjä voi etsiä teorioita, joiden osana on annettu sana
 - käyttäjä voi poistaa kirjoittamansa kommentin tai teorian
-- ylläpitäjä voi lisätä ja poistaa teorioita ja kommentteja
-- tulevat taulut: comments, likes, tags
 
 
 ## Ohjeet käynnistämiseen paikallisesti
