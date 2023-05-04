@@ -2,9 +2,6 @@ from flask import session
 from sqlalchemy.sql import text
 from db import db
 
-def save_session(post_id):
-    session["post_id"] = post_id
-
 def get_comments():
     post_id = session["post_id"]
     sql = text("SELECT u.username, c.message, c.posted_at, p.title FROM users u JOIN comments c ON c.user_id=u.id JOIN posts p ON c.post_id=p.id  WHERE c.post_id=:post_id")
