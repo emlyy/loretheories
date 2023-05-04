@@ -8,10 +8,10 @@ Sovelluksen tilanne:
 - käyttäjä voi luoda uuden tunnuksen, kirjautua sisään ja ulos
 - voi lukea julkaistuja teorioita ja kirjautuneena pystyy luomaan uuden teorian
 - käyttäjä voi kommentoida ja tykätä muiden julkaisuja
-
-Tulevia ominaisuuksia:
 - käyttäjä voi lisätä categoria- ja muut tägit
 - käyttäjä voi etsiä teorioita, joiden osana on annettu sana
+
+Tulevia ominaisuuksia:
 - käyttäjä voi poistaa kirjoittamansa kommentin tai teorian
 
 
