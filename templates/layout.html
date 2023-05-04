@@ -1,15 +1,22 @@
 <!doctype html>
+<link rel="stylesheet" href="/static/style.css">
+<meta name"viewport" content="width=device-width, initial-scale=1">
+
 <title>Lore Theories - {% block title %}{% endblock %}</title>
 <h1>LoreTheories</h1>
-<a href="/">Home</a>
-<a href="categories">Categories</a>
-<a href="search">Search</a>
-<a href="all_posts">All Theories</a>
-{% if session.user_id %}
-    <a href="create">Create</a>
-    <a href="logout">Log out</a>
-{% else %}
-    <a href="login">Log in</a>
-{% endif %}
+<nav>
+  <ul>
+    <li><a href="/">Home</a></li>
+    <li><a href="categories">Categories</a></li>
+    <li><a href="search">Search</a></li>
+    <li><a href="all_posts">All Theories</a></li>
+    {% if session.user_id %}
+        <li><a href="create">Create</a></li>
+        <li><a href="logout">Log out</a></li>
+    {% else %}
+        <li><a href="login">Log in</a></li>
+    {% endif %}
+  </ul>
+</nav>
 <hr>
 {% block content %}{% endblock %}

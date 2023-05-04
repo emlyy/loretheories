@@ -2,13 +2,14 @@
 {% block title %}{% endblock %}
 {% block content %}
 <title>New Theory</title>
-<h1>Create a new theory post:</h1>
-<form action="create" method="POST">
-<p>Title:<br>
-<input type="text" name="title"></p>
-<textarea name="message" rows="10" cols="100">
+<div class="boxdiv">
+<h2>Create a new theory post:</h2>
+<form action="create" class="comment"  method="POST">
+<p>Title: <input type="text" name="title"></p>
+<textarea name="message" rows="15" cols="80">
 </textarea> <br>
-<input type="submit" value="share post">
+<input class="button" type="submit" value="share post">
 </form>
+</div>
 <p>{{ error }}<p>
 {% endblock %}

@@ -1,0 +1,99 @@
+body {
+    margin: auto;
+    max-width: 45em;
+    font-family: 'Linux Biolinum O', 'Helvetica Neue', 'Open Sans', Arial, sans-serif;
+    background: rgb(238,201,174);
+    background: radial-gradient(circle, rgba(238,201,174,1) 0%, rgba(174,148,233,1) 100%);
+}
+form {
+    background: rgb(142,127,177);
+    padding: .5em;
+    width: auto;
+    height: auto;
+    margin: 1.5em;
+    border-radius: 8px;
+}
+.formbtn {
+    text-align: right;
+    margin: 0;
+    padding: 0;
+}
+.comment {
+    text-align: center;
+}
+.boxdiv {
+    background: rgb(142,127,177);
+    padding: .5em;
+    width: auto;
+    height: auto;
+    margin: 1.5em;
+    border-radius: 8px;
+}
+.button {
+    padding: 4px;
+    border: 2px solid rgb(102,102,204);
+    background-color: white;
+    color: #6666CC
+    font-size: 1em;
+    cursor: pointer;
+    border-radius: 8px;
+    text-align: right;
+    margin: 0;
+}
+.button:hover{
+    background: rgb(102,102,204);
+    color: white;
+}
+p {
+    text-align: center;
+    margin-bottom: 1em;
+    color: white;
+    font-size: 1em;
+}
+nav li {
+    display: inline-block;
+    padding: .5em;
+}
+nav li a {
+    text-decoration: none;
+    font-size: 1.5em;
+    color: white;
+}
+nav li:hover {
+    background-color: rgb(102,102,204);
+    border-radius: 8px;
+}
+nav ul {
+    background: rbg(102,102,204);
+    padding: 0;
+    margin: 1em;
+    text-align: center;
+}
+h1 {
+    text-align: left;
+    color: #6666CC;
+    font-size: 3em;
+    text-decoration: underline;
+}
+h2 {
+    text-align: center;
+    color: #6666CC;
+    font-size: 2em;
+    text-decoration: underline;
+}
+a {
+    text-decoration: none;
+    color: CadetBlue;
+}
+.post_title {
+    text-align: left;
+    color: #eec9ae;
+    font-size: 1.5em;
+    text-decoration: underline;
+    margin: .5em;
+}
+.post_text {
+    text-align: left;
+    color: white;
+}
+
