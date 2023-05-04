@@ -6,8 +6,23 @@
 <h2>Create a new theory post:</h2>
 <form action="create" class="comment"  method="POST">
 <p>Title: <input type="text" name="title"></p>
-<textarea name="message" rows="15" cols="80">
+<textarea name="message" maxlength="500" rows="15" cols="80">
 </textarea> <br>
+<label for="category">Choose a category:</label>
+<select name="category" id="category">
+  <option value="All">All</option>
+  <option value="Movies">Movies</option>
+  <option value="TvShows">Tv Shows</option>
+  <option value="Books">Books</option>
+  <option value="Comics">Comics</option>
+  <option value="AnimeManga">Anime/Manga</option>
+  <option value="VideoGames">Video Games</option>
+  <option value="Music">Music</option>
+  <option value="Podcasts">Podcasts</option>
+  <option value="Other">Other</option>
+</select>
+Tags: <textarea name="tags" maxlength="50" rows="5" cols="5">
+</textarea>
 <input class="button" type="submit" value="share post">
 </form>
 </div>
