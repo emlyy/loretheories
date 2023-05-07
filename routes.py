@@ -15,7 +15,7 @@ def login():
         username = request.form["username"]
         password = request.form["password"]
         if not users.login(username, password):
-            return render_template("login.html", message="Incorrect username or password :/ Please try again.")
+            return render_template("login.html", message="Incorrect username or password. Please try again.")
         return redirect("/")
 
 @app.route("/logout")
@@ -35,13 +35,13 @@ def register():
         error_message = None
         if len(username) < 1:
             error_message = "username cannot be empty"
-        if not user.check_username(username):
+        if not users.check_username(username):
             error_message = "username already taken"
         if len(password_1) < 6:
             error_message = "password must be atleast 6 characters long"
         if password_1 != password_2:
             error_message = "passwords do not match"
-        if error_message == None:
+        if not error_message:
             if users.register(username, password_1):
                 return redirect("/")
             else:
@@ -57,6 +57,10 @@ def create():
         message = request.form["message"]
         category = request.form["category"]
         tags = request.form["tags"]
+        if len(title) == 0:
+            return render_template("create.html", error="title cannot be empty")
+        if len(message) == 0:
+            return render_template("create.html", error="cannot post an empty theory")
         if not posts.save_post(title, message, category):
             return render_template("create.html", error="there was a problem try again")
         post_id = posts.get_post_id(title, message)
@@ -106,8 +110,7 @@ def result():
     if len(posts_list) != 0:
         likes.check_if_liked
         return render_template("search.html", posts=posts_list, header="Results for search: "+search_word)
-    else:
-        return render_template("search.html", header="No results for search:"+search_word)
+    return render_template("search.html", header="No results for search:"+search_word)
 
 @app.route("/comments/<int:id>", methods=["GET"])
 def commentss(id):
@@ -120,13 +123,16 @@ def comment():
         comments_list = comments.get_comments()
         if len(comments_list) != 0:
             return render_template("comments.html", comments=comments_list)
-        else:
-            return render_template("comments.html", message="There are no commnets, be the first to commnent.")
+        return render_template("comments.html", message="There are no commnets, be the first to commnent.")
     if request.method == "POST":
         comment = request.form["message"]
-        if not comments.post_comment(comment):
-            return render_template("comments.html", message="could not post comment")
-    return redirect("/comment")
+        error = "Comment cannot be empty!"
+        if len(comment) != 0:
+            if comments.post_comment(comment):
+                return redirect("/comment")
+            error = "Could not post comment."
+        comments_list = comments.get_comments()
+        return render_template("comments.html", comments=comments_list, message=error)
 
 @app.route("/like/<int:id>", methods=["POST"])
 def likess(id):
