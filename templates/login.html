@@ -2,13 +2,16 @@
 {% block title %}{% endblock %}
 {% block content %}
 <h2>Log in</h2>
-<p>Don't have an account yet?</p>
-<a href="register">click here to sign up</a>
+<p>Don't have an account yet?
+<a href="register">click here to sign up</a></p>
 <form action="login" method="POST">
+{% if message %}
+<p style="color:red">{{ message }}</p>
+{% endif %}
 <p>username:<br>
-<input type="text" name="username"></p>
+<input type="text" name="username" maxlength="20"></p>
 <p>password:<br>
-<input type="password" name="password"></p>
+<input type="password" name="password" maxlength="20"></p>
 <input type="submit" class="button" value="log in">
 </form>
 {% endblock %}
