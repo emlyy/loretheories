@@ -21,15 +21,12 @@ def get_all_posts():
 
 def save_post(title, message, category):
     user_id = session["user_id"]
-    try:
-        sql = text("INSERT INTO posts (user_id, title, message,"
+    sql = text("INSERT INTO posts (user_id, title, message,"
         "category, posted_at) VALUES (:user_id, :title, :message,"
         " :category, NOW())")
-        db.session.execute(sql, {"user_id":user_id, "title":title,
+    db.session.execute(sql, {"user_id":user_id, "title":title,
         "message":message, "category":category})
-        db.session.commit()
-    except:
-        return False
+    db.session.commit()
     return True
 
 def save_tags(tags, post_id):
@@ -41,7 +38,6 @@ def save_tags(tags, post_id):
         db.session.execute(sql, {"post_id":post_id, "tag":tag})
         db.session.commit()
     return True
-
 
 def search_posts(search_word):
     sql = text("SELECT u.username, p.user_id, p.id, p.title, p.message,"
@@ -62,7 +58,6 @@ def posts_by_category():
     result = db.session.execute(sql, {"category":category})
     posts = result.fetchall()
     return posts
-
 
 def posts_by_tag():
     tag = session["tag"]
@@ -93,4 +88,3 @@ def delete(id):
     sql = text("DELETE FROM posts WHERE id=:id")
     db.session.execute(sql, {"id":id})
     db.session.commit()
-

@@ -16,10 +16,16 @@
     <br class="post_text">{{ post[4] }}</br>
     <br>Created at: {{ post[5] }} by {{ post[0] }}
     <a href="/comments/{{ post[2] }}">comments</a>
-    {{ post[5] }} likes
+    {{ post[6] }} likes
 {% if session.user_id == post[1] %}
     <form class="formbtn" action="delete/{{ post[2] }}" method="POST">
         <input type="submit" class="deletebtn" value="delete">
+        <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+    </form>
+{% endif %}
+{% if session.user_id %}
+    <form class="formbtn" action="/like/{{ post[2] }}" method="POST">
+        <input type="submit" class="button" value="like">
         <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
     </form>
 {% endif %}

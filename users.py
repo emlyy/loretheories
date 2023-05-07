@@ -1,8 +1,8 @@
+import secrets
 from flask import session, abort, request
 from werkzeug.security import check_password_hash, generate_password_hash
 from sqlalchemy.sql import text
 from db import db
-import secrets
 
 def logged_in():
     if session.get("username"):
@@ -23,7 +23,7 @@ def check_username(username):
     sql = text("SELECT username FROM users WHERE username=:username")
     result = db.session.execute(sql, {"username":username})
     user = result.fetchone()
-    if user == None:
+    if user is None:
         return True
     return False
 
@@ -31,7 +31,7 @@ def login(username, password):
     sql = text("SELECT id, password FROM users WHERE username=:username")
     result = db.session.execute(sql, {"username":username})
     user = result.fetchone()
-    if user == None:
+    if user is None:
         return False
     if logged_in():
         return False

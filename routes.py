@@ -17,7 +17,8 @@ def login():
         username = request.form["username"]
         password = request.form["password"]
         if not users.login(username, password):
-            return render_template("login.html", message="Incorrect username or password. Please try again.")
+            return render_template("login.html", 
+                message="Incorrect username or password. Please try again.")
         return redirect("/")
 
 @app.route("/logout")
@@ -65,11 +66,9 @@ def create():
                 return render_template("create.html", error="title cannot be empty")
             if len(message) == 0:
                 return render_template("create.html", error="cannot post an empty theory")
-            if not posts.save_post(title, message, category):
-                return render_template("create.html", error="there was a problem try again")
+            posts.save_post(title, message, category)
             post_id = posts.get_post_id(title, message)
-            if not posts.save_tags(tags, post_id):
-                return render_template("create.html", error="there was a problem with adding the tags, however your theory was still posted")
+            posts.save_tags(tags, post_id)
     return redirect("/all_posts")
 
 @app.route("/all_posts", methods=["GET"])
@@ -95,9 +94,11 @@ def category():
     likes.check_if_liked
     posts_list = posts.posts_by_category()
     if len(posts_list) != 0:
-        return render_template("posts.html", posts=posts_list, header="All shared theories in "+session["category"])
+        return render_template("posts.html",
+            posts=posts_list, header="All shared theories in "+session["category"])
     else:
-        return render_template("posts.html", posts=posts_list, header="No shared theories in "+session["category"])
+        return render_template("posts.html", posts=posts_list,
+            header="No shared theories in "+session["category"])
 
 @app.route("/tag/<id>")
 def tagg(id):
@@ -110,8 +111,10 @@ def tag():
     likes.check_if_liked
     posts_list = posts.posts_by_tag()
     if len(posts_list) != 0:
-        return render_template("posts.html", posts=posts_list, header="All shared theories with tag: "+session["tag"])
-    return render_template("posts.html", posts=posts_list, header="No shared theories with tag "+session["tag"])
+        return render_template("posts.html", posts=posts_list,
+            header="All shared theories with tag: "+session["tag"])
+    return render_template("posts.html", posts=posts_list,
+        header="No shared theories with tag "+session["tag"])
 
 @app.route("/search", methods=["GET"])
 def search():
@@ -127,7 +130,8 @@ def result():
     posts_list = posts.search_posts(search_word)
     if len(posts_list) != 0:
         likes.check_if_liked
-        return render_template("search.html", posts=posts_list, header="Results for search: "+search_word)
+        return render_template("search.html", posts=posts_list,
+            header="Results for search: "+search_word)
     return render_template("search.html", header="No results for search:"+search_word)
 
 @app.route("/comments/<int:id>", methods=["GET"])
@@ -141,7 +145,8 @@ def comment():
         comments_list = comments.get_comments()
         if len(comments_list) != 0:
             return render_template("comments.html", comments=comments_list)
-        return render_template("comments.html", message="There are no commnets, be the first to commnent.")
+        return render_template("comments.html",
+            message="There are no commnets, be the first to commnent.")
     if request.method == "POST":
         if users.logged_in():
             users.check_csrf()
@@ -170,9 +175,9 @@ def like():
     if session["previous"] == "result":
         url = "/result?query="+session["search"]
         return redirect(url)
-    elif session["previous"] == "category":
+    if session["previous"] == "category":
         return redirect("/category")
-    elif session["previous"] == "tags":
+    if session["previous"] == "tags":
         return redirect("/tag")
     return redirect("all_posts")
 
@@ -184,9 +189,9 @@ def delete(id):
     if session["previous"] == "result":
         url = "/result?query="+session["search"]
         return redirect(url)
-    elif session["previous"] == "category":
+    if session["previous"] == "category":
         return redirect("/category")
-    elif session["previous"] == "tags":
+    if session["previous"] == "tags":
         return redirect("/tag")
     return redirect("/all_posts")
 
