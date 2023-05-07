@@ -6,23 +6,25 @@
     <p> There are no theories on the site yet.</p>
 {% endif %}
 {% for post in posts %}
-  <div class="boxdiv">
-    <p class="post_title">{{ post[3] }}</p>
-    <br class="post_text">{{ post[4] }}</br>
-    <br>Created at: {{ post[5] }} by {{ post[0] }}
-    <a href="/comments/{{ post[2] }}">comments</a>
-    {{ post[6] }} likes
-{% if session.user_id == post[1] %}
-    <form class="formbtn" action="delete/{{ post[2] }}" method="POST">
-    <input type="submit" class="deletebtn" value="delete">
-    </form>
-{% endif %}
-{% if session.user_id %}
-    <form class="formbtn" action="/like/{{ post[2] }}" method="POST">
-    <input type="submit" class="button" value="like">
-    </form>
-{% endif %}
-  </div>
+    <div class="boxdiv">
+        <p class="post_title">{{ post[3] }}</p>
+        <br class="post_text">{{ post[4] }}</br>
+        <br>Created at: {{ post[5] }} by {{ post[0] }}
+        <a href="/comments/{{ post[2] }}">comments</a>
+        {{ post[6] }} likes
+        {% if session.user_id == post[1] %}
+            <form class="formbtn" action="delete/{{ post[2] }}" method="POST">
+                <input type="submit" class="deletebtn" value="delete">
+                <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+            </form>
+        {% endif %}
+        {% if session.user_id %}
+            <form class="formbtn" action="/like/{{ post[2] }}" method="POST">
+                <input type="submit" class="button" value="like">
+                <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+            </form>
+        {% endif %}
+    </div>
 {% endfor %}
 {% if session.user_id %}
     <p>You are logged in as {{ session.username }}</p>

@@ -15,6 +15,7 @@
 {% if session.user_id == comment[4] %}
     <form class="formbtn" action="comment/delete/{{ comment[3] }}" method="POST">
     <input type="submit" class="deletebtn" value="delete">
+    <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
     </form>
 {% endif %}
   </div>
@@ -25,7 +26,10 @@
 <textarea name="message" rows="10" cols="60" maxlength="250">
 </textarea> <br>
 <input type="submit" class="button" value="send">
+<input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
 </form>
 <p>You are logged in as {{ session.username }}</p>
+{% else %}
+<p style="color:red">You need to be logged in to be able to comment</p>
 {% endif %}
 {% endblock %}

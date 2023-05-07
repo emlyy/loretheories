@@ -9,6 +9,8 @@ def index():
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
+    if users.logged_in():
+        return redirect("/")
     if request.method == "GET":
         return render_template("login.html")
     if request.method == "POST":
@@ -20,7 +22,7 @@ def login():
 
 @app.route("/logout")
 def logout():
-    if users.logged_in:
+    if users.logged_in():
         users.logout()
     return redirect("/")
 
@@ -50,22 +52,24 @@ def register():
 
 @app.route("/create", methods=["GET", "POST"])
 def create():
-    if request.method == "GET":
-        return render_template("create.html")
-    if request.method == "POST":
-        title = request.form["title"]
-        message = request.form["message"]
-        category = request.form["category"]
-        tags = request.form["tags"]
-        if len(title) == 0:
-            return render_template("create.html", error="title cannot be empty")
-        if len(message) == 0:
-            return render_template("create.html", error="cannot post an empty theory")
-        if not posts.save_post(title, message, category):
-            return render_template("create.html", error="there was a problem try again")
-        post_id = posts.get_post_id(title, message)
-        if not posts.save_tags(tags, post_id):
-            return render_template("create.html", error="there was a problem with adding the tags, however your theory was still posted")
+    if users.logged_in():
+        if request.method == "GET":
+            return render_template("create.html")
+        if request.method == "POST":
+            users.check_csrf()
+            title = request.form["title"]
+            message = request.form["message"]
+            category = request.form["category"]
+            tags = request.form["tags"]
+            if len(title) == 0:
+                return render_template("create.html", error="title cannot be empty")
+            if len(message) == 0:
+                return render_template("create.html", error="cannot post an empty theory")
+            if not posts.save_post(title, message, category):
+                return render_template("create.html", error="there was a problem try again")
+            post_id = posts.get_post_id(title, message)
+            if not posts.save_tags(tags, post_id):
+                return render_template("create.html", error="there was a problem with adding the tags, however your theory was still posted")
     return redirect("/all_posts")
 
 @app.route("/all_posts", methods=["GET"])
@@ -139,18 +143,22 @@ def comment():
             return render_template("comments.html", comments=comments_list)
         return render_template("comments.html", message="There are no commnets, be the first to commnent.")
     if request.method == "POST":
-        comment = request.form["message"]
-        error = "Comment cannot be empty!"
-        if len(comment) != 0:
-            if comments.post_comment(comment):
-                return redirect("/comment")
-            error = "Could not post comment."
-        comments_list = comments.get_comments()
-        return render_template("comments.html", comments=comments_list, message=error)
+        if users.logged_in():
+            users.check_csrf()
+            comment = request.form["message"]
+            error = "Comment cannot be empty!"
+            if len(comment) != 0:
+                if comments.post_comment(comment):
+                    return redirect("/comment")
+                error = "Could not post comment."
+            comments_list = comments.get_comments()
+            return render_template("comments.html", comments=comments_list, message=error)
+    return redirect("/login")
 
 @app.route("/like/<int:id>", methods=["POST"])
 def likess(id):
     if users.logged_in():
+        users.check_csrf()
         sessions.save_post(id)
         return redirect("/like")
     return redirect("/login")
@@ -171,6 +179,7 @@ def like():
 @app.route("/delete/<int:id>", methods=["POST"])
 def delete(id):
     if users.logged_in():
+        users.check_csrf()
         posts.delete(id)
     if session["previous"] == "result":
         url = "/result?query="+session["search"]
@@ -184,5 +193,6 @@ def delete(id):
 @app.route("/comment/delete/<int:id>", methods=["POST"])
 def delete_comment(id):
     if users.logged_in():
+        users.check_csrf()
         comments.delete(id)
     return redirect("/comment")

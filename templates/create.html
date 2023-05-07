@@ -24,6 +24,7 @@
 Tags: <textarea name="tags" maxlength="50" rows="2" cols="15" placeholder="these are all separate tags">
 </textarea>
 <input class="button" type="submit" value="share post">
+<input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
 </form>
 </div>
 <p>{{ error }}<p>
