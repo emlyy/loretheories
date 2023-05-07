@@ -14,4 +14,10 @@
     <li><a href="category/Podcasts">Podcasts</a></li>
     <li><a href="category/Other">Other</a></li>
 </ul>
+<h1>Tags</h1>
+<ul>
+{% for tag in tags %}
+  <li><a href="tag/{{ tag[0] }}">{{ tag[0] }}</a></li>
+{% endfor %}
+</ul>
 {% endblock %}

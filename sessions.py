@@ -13,3 +13,6 @@ def save_previous(previous):
 
 def save_search(word):
     session["search"] = word
+
+def save_tag(tag):
+    session["tag"] = tag
