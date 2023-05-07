@@ -43,7 +43,7 @@ def register():
             error_message = "passwords do not match"
         if not error_message:
             if users.register(username, password_1):
-                return redirect("/")
+                return redirect("/login")
             else:
                 error_message = "there was a problem try again"
         return render_template("register.html", message=error_message)
@@ -77,7 +77,8 @@ def all_posts():
 
 @app.route("/categories", methods=["GET"])
 def categories():
-    return render_template("categories.html")
+    tags = posts.tags()
+    return render_template("categories.html", tags=tags)
 
 @app.route("/category/<id>")
 def categoryy(id):
@@ -94,6 +95,19 @@ def category():
     else:
         return render_template("posts.html", posts=posts_list, header="No shared theories in "+session["category"])
 
+@app.route("/tag/<id>")
+def tagg(id):
+    sessions.save_tag(id)
+    sessions.save_previous("tags")
+    return redirect("/tag")
+
+@app.route("/tag", methods=["GET"])
+def tag():
+    likes.check_if_liked
+    posts_list = posts.posts_by_tag()
+    if len(posts_list) != 0:
+        return render_template("posts.html", posts=posts_list, header="All shared theories with tag: "+session["tag"])
+    return render_template("posts.html", posts=posts_list, header="No shared theories with tag "+session["tag"])
 
 @app.route("/search", methods=["GET"])
 def search():
@@ -150,4 +164,25 @@ def like():
         return redirect(url)
     elif session["previous"] == "category":
         return redirect("/category")
+    elif session["previous"] == "tags":
+        return redirect("/tag")
     return redirect("all_posts")
+
+@app.route("/delete/<int:id>", methods=["POST"])
+def delete(id):
+    if users.logged_in():
+        posts.delete(id)
+    if session["previous"] == "result":
+        url = "/result?query="+session["search"]
+        return redirect(url)
+    elif session["previous"] == "category":
+        return redirect("/category")
+    elif session["previous"] == "tags":
+        return redirect("/tag")
+    return redirect("/all_posts")
+
+@app.route("/comment/delete/<int:id>", methods=["POST"])
+def delete_comment(id):
+    if users.logged_in():
+        comments.delete(id)
+    return redirect("/comment")
