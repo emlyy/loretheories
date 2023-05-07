@@ -44,6 +44,22 @@ form {
     background: rgb(102,102,204);
     color: white;
 }
+.deletebtn {
+    padding: 4px;
+    border: 2px solid rgb(210,43,43);
+    background-color: white;
+    color: #D22B2B
+    font-size: 1em;
+    cursor: pointer;
+    border-radius: 8px;
+    text-align: right;
+    margin: 0;
+}
+.deletebtn:hover{
+    background: rgb(210,43,43);
+    color: white;
+}
+
 p {
     text-align: center;
     margin-bottom: 1em;
