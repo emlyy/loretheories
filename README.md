@@ -3,6 +3,8 @@
 
 Lore Theories on sovellus, jossa voi jakaa teorioita kaikista mediatyypeistä, kuten videopeleistä, elokuvista ja kirjoista. Käyttäjä voi julkaista teorian, jonka muut käyttäjät voivat lukea ja kommentoida.
 
+Sovellus löytyy osoitteesta: https://loretheories.fly.dev/
+
 Sovelluksen ominaisuuksia:
 - käyttäjä voi luoda uuden tunnuksen, kirjautua sisään ja ulos
 - voi lukea julkaistuja teorioita ja kirjautuneena pystyy luomaan uuden teorian
@@ -13,7 +15,7 @@ Sovelluksen ominaisuuksia:
 - käyttäjä voi lukea julkaisuja kategorian ja tägien mukaan
 - käyttäjä voi poistaa kirjoittamansa kommentin tai teorian
 
-- sovellus on testattavissa paikallisesti
+- sovellus on myös testattavissa paikallisesti
 - csrf-suojaus on otettu huomioon
 
 ## Ohjeet käynnistämiseen paikallisesti
